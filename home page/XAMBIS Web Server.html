@@ -1,0 +1,66 @@
+
+  
+  <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <script src="microajax.js"></script>
+  <title>XAMBIS Web Server</title>     
+
+  </head>
+  <body>
+
+    <div class="container"> 
+      <header> 
+        <h1>XAMBIS Web Server 1</h1> 
+      </header>
+
+      <div id="navMenu">
+      <nav> 
+        <ul> 
+          <li><a href="http://192.168.0.201/">Home Light .01</a></li> 
+          <li><a href="http://192.168.0.202/">Fans .02</a></li> 
+          <li><a href="admin.html">Admin Page</a></li> 
+        </ul> 
+      </nav>
+      </div>
+
+    <article>
+      <h1>Controls</h1>
+      <div id="ESP01"></div>
+
+      <div id="ESP02"></div>
+      
+    </article>
+
+    <footer>Copyright © xambis </footer>
+  </div> 
+  
+  </body> 
+  <script>
+  window.onload = function ()
+  {
+      setValues("filldynamicdata.html");
+      setTimeout(requestContent02, 100);
+  }
+
+
+  function changeOnFanspeed(newValue) { 
+   var newFanspeed;
+   if(newValue == -1){
+      var fanspeed = parseInt(document.getElementById("fanspeed").innerHTML, 10);
+      if(fanspeed > 0){ 
+        newFanspeed = 0; 
+      }else{ 
+        newFanspeed = 1023; 
+      }
+   }else { newFanspeed = newValue; }
+   
+   document.getElementById("fanspeed").innerHTML=newFanspeed; 
+   document.getElementById("fanspeedRange").value=newFanspeed;
+    
+   var myRequest = new Request('/api/esp02/?fanspeed='+ newFanspeed.toString()); 
+   fetch(myRequest); 
+  } 
+  
+  </script>
+

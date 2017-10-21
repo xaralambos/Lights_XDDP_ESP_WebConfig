@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>A GLOBAL variable can be accessed from any script or function.</p>
+
+<p id="demo"></p>
+<p id="demo1"></p>
+<p id="demo2"></p>
+<p id="demo3"></p>
+<p id="demo4"></p>
+
+<script>
+
+var j = 1;
+myFunction("Volvo");
+myFunction("BMW");
+
+function myFunction(carName) { 
+    document.getElementById("demo").innerHTML +="I can display " + carName + " " + j + "<br/>";
+    console.log( "myFunction run: " , j);
+	j++;
+}
+
+
+var i = 1; 
+loadXMLDoc("http://192.168.0.202/api/?fanspeed=0", addContent);
+loadXMLDoc("http://192.168.0.204/api/?fanspeed=1023", addContent);
+
+
+function loadXMLDoc(url, orscF) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = orscF;
+  xhttp.open("GET", url, true);
+  xhttp.send();
+
+}
+
+function addContent(){
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("demo1").innerHTML += this.responseText + "<br/>";
+  }
+  console.log( "addContent run: " , i);
+  i++;
+}
+
+
+/*
+var i = 1; 
+microAjax("http://192.168.0.202/api/?fanspeed=0", OtherFunction );
+//microAjax("http://192.168.0.204/api/?fanspeed=1023", OtherFunction );
+setTimeout(delayedMicroajax, 75);
+
+function delayedMicroajax(){
+	microAjax("http://192.168.0.204/api/?fanspeed=1024", OtherFunction );
+}
+
+function OtherFunction(carName) {
+    document.getElementById("demo1").innerHTML += "I can display " + carName + " i:" + i + "<br/>";
+    console.log( "OtherFunction run: " , i);
+	i++;
+}
+
+function microAjax(B, A) {
+  this.bindFunction = function(E, D) {
+    return function() {
+      return E.apply(D, [D]);
+    };
+  };
+  this.stateChange = function(D) {
+    if (this.request.readyState == 4) {
+      this.callbackFunction(this.request.responseText);
+    }
+  };
+  this.getRequest = function() {
+    if (window.ActiveXObject) {
+      return new ActiveXObject("Microsoft.XMLHTTP");
+    } else {
+      if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+      }
+    } return false;
+  };
+  this.postBody = (arguments[2] || "");
+  this.callbackFunction = A;
+  this.url = B;
+  this.request = this.getRequest();
+  if (this.request) {
+    var C = this.request;
+    C.onreadystatechange = this.bindFunction(this.stateChange, this);
+    if (this.postBody !== "") {
+      C.open("POST", B, true);
+      C.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+      C.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      C.setRequestHeader("Connection", "close");
+    } else {
+      C.open("GET", B, true);
+    } C.send(this.postBody);
+  }
+}
+*/
+
+//console.log("carName: " , carName); //this is error and proufs that function variables are local to the functions
+</script>
+
+</body>
+</html>
+
+
